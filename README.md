@@ -11,3 +11,4 @@ But i need more ideas to what to implement next idk.
 Alot, SERIOUSLY, but will be improved(biggest lie ive told in my life, MAYBE if i have the time)
 Chmod +x the script yourself, or it may be alr, tch, idk?!
 bare-bones looking ahh script :skull: :skull: :pray:
+# BUT IF YOUR USING THE SCRIPT... PLEASEEEEEEEE RUN THIS COMMAND: sudo mv ez /usr/bin/ez
