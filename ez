@@ -16,14 +16,30 @@ fetch_me() {
     read input
     sudo pacman -S "$input"
 }
-
+install_yay_thing() {
+    cd ~
+    mkdir git
+    cd git
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
+    cd ~
+    sudo rm -rf ~/git/yay
+    sudo rm -rf ~/git/
+    echo "Yay officially installed on your arch(btw) system!!1!!!11!1"
+}
+aur_package_install() {
+    echo "select the package you wanna install: "
+    read aur_input
+    yay -S "$aur_input"
+}
 remove_package() {
     echo "enter package name to remove: "
     read input2
     sudo pacman -Rns "$input2"
 }
 echo -e "Select yo option bruv!\n"
-select choice in "Update System" "Install" "Uninstall" "Quit"; do
+select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur package manager" "aur install"; do
     case $choice in
         "Update System")
             update
@@ -33,6 +49,12 @@ select choice in "Update System" "Install" "Uninstall" "Quit"; do
             ;;
         "Uninstall")
             remove_package
+            ;;
+        "Install aur package manager")
+            install_yay_thing
+            ;;
+        "aur install")
+            aur_package_install
             ;;
         "Quit")
             echo "Exiting the trash script alr? weak..."
