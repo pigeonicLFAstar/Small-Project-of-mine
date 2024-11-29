@@ -12,3 +12,4 @@ Alot, SERIOUSLY, but will be improved(biggest lie ive told in my life, MAYBE if 
 Chmod +x the script yourself, or it may be alr, tch, idk?!
 bare-bones looking ahh script :skull: :skull: :pray:
 # BUT IF YOUR USING THE SCRIPT... PLEASEEEEEEEE RUN THIS COMMAND: sudo mv ez /usr/bin/ez
+so you wouldnt have to keep cd'ing into that dir js to run a file.
