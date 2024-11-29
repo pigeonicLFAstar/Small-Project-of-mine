@@ -7,3 +7,7 @@ What is this script you might ask?
 # WELL ITS AN EZ ARCH LINUX(like installing, uninstalling, updating and such)
 But more will be added LATERRRR!!!
 But i need more ideas to what to implement next idk.
+# DOWNSIDES OF THIS TRASH AHH SCRIPT!?!?!?
+Alot, SERIOUSLY, but will be improved(biggest lie ive told in my life, MAYBE if i have the time)
+Chmod +x the script yourself, or it may be alr, tch, idk?!
+bare-bones looking ahh script :skull: :skull: :pray:
