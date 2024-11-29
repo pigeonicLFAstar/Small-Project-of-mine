@@ -1,0 +1,42 @@
+#!/bin/zsh
+echo "
+██╗░░░░░██╗███╗░░██╗██╗░░░██╗██╗░░██╗░█████╗░  ███████╗███████╗██╗██╗██╗
+██║░░░░░██║████╗░██║██║░░░██║╚██╗██╔╝██╔══██╗  ██╔════╝╚════██║██║██║██║
+██║░░░░░██║██╔██╗██║██║░░░██║░╚███╔╝░╚═╝███╔╝  █████╗░░░░███╔═╝██║██║██║
+██║░░░░░██║██║╚████║██║░░░██║░██╔██╗░░░░╚══╝░  ██╔══╝░░██╔══╝░░╚═╝╚═╝╚═╝
+███████╗██║██║░╚███║╚██████╔╝██╔╝╚██╗░░░██╗░░  ███████╗███████╗██╗██╗██╗
+╚══════╝╚═╝╚═╝░░╚══╝░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░  ╚══════╝╚══════╝╚═╝╚═╝╚═╝
+"
+update() {
+    sudo pacman -Syu
+}
+
+fetch_me() {
+    echo "enter package name: "
+    read input
+    sudo pacman -Rns "$input"
+}
+
+remove_package() {
+    echo "enter package name to remove: "
+    read input2
+    sudo pacman -R "$input2"
+}
+echo -e "Select yo option bruv!\n"
+select choice in "Update System" "Install" "Uninstall" "Quit"; do
+    case $choice in
+        "Update System")
+            update
+            ;;
+        "Install")
+            fetch_me
+            ;;
+        "Uninstall")
+            remove_package
+            ;;
+        "Quit")
+            echo "Aborting..."
+            break
+            ;;
+    esac
+done
