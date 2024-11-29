@@ -48,7 +48,7 @@ remove_package() {
     sudo pacman -Rns "$input2"
 }
 echo -e "Select yo option bruv!\n"
-select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur package manager" "aur install" "Quit fully"; do
+select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur package manager" "aur install"; do
     case $choice in
         "Update System")
             update
@@ -71,9 +71,6 @@ select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur packa
         "Quit")
             echo "Exiting the trash script alr? weak..."
             break
-            ;;
-        "Quit fully")
-            exit
             ;;
     esac
 done
