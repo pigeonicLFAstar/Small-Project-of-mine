@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/zsh
 echo "
 ██╗░░░░░██╗███╗░░██╗██╗░░░██╗██╗░░██╗░█████╗░  ███████╗███████╗██╗██╗██╗
 ██║░░░░░██║████╗░██║██║░░░██║╚██╗██╔╝██╔══██╗  ██╔════╝╚════██║██║██║██║
@@ -10,11 +10,33 @@ echo "
 update() {
     sudo pacman -Syu
 }
-
+#DAWG STOP STARING AND DO YOUR THING ALR BRUHHHHH :fire:
 fetch_me() {
     echo "enter package name: "
     read input
     sudo pacman -S "$input"
+}
+random_number() {
+    random=$(($RANDOM % 10))
+    echo "uhh, okay? here: $random"
+}
+edit_config() {
+    echo "hohoho, so you want to edit me?!?!? idc, js go ahead, script is all yours."
+    sleep 2
+    sudo nano /usr/bin/ez
+}
+edit_file() {
+    echo "alr, specify the file name you want to edit AND THE DIRECTORY OFC, human."
+    read stop_looking_here
+    nano "$stop_looking_here"
+}
+date_plz() {
+    date=$(date)
+    echo "js look at yo calendar if your that lazy, but fine, here: $date"
+}
+user_plz() {
+    user=$(whoami)
+    echo "$user, there, i told you!!!11!1"
 }
 install_yay_thing() {
     if command -v yay &> /dev/null; then
@@ -32,6 +54,14 @@ install_yay_thing() {
     sudo rm -rf ~/git/
     echo "Yay officially installed on your arch(btw) system!!1!!!11!1"
 }
+uninstall_yay_package() {
+    echo "select which yay package to uninstall(improves your arch jawline, get it?): "
+    read select_remove_package
+    yay -R "$select_remove_package"
+}
+update_yay() {
+    yay -Syu
+}
 aur_package_install() {
     if ! command -v yay &> /dev/null; then
         echo "go back to installing yay before you pick this option, privileged!11!11!1"
@@ -46,8 +76,23 @@ remove_package() {
     read input2
     sudo pacman -Rns "$input2"
 }
+install_flatpak() {
+    if command -v flatpak &> /dev/null; then
+        echo "bruv you already have flatpak :skull:"
+    else
+        echo "Installing flatpak then, but after its installed, js restart your system plzzzzz"
+        sudo pacman -S flatpak
+        echo "would you like to restart?(you can NOT mispell yes)"
+        read choice_for_restart
+        if [[ "$choice_for_restart" == "yes" ]]; then
+            sudo reboot
+        else
+            echo "a no is a no ig..."
+        fi
+    fi
+}
 echo -e "Select yo option bruv!\n"
-select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur package manager" "aur install"; do
+select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur package manager" "aur install" "gimme a number one to ten plzzz" "edit config" "edit file" "whats my username again" "say date" "update yay" "uninstall a yay package" "flatpak installation"; do
     case $choice in
         "Update System")
             update
@@ -65,8 +110,31 @@ select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur packa
             aur_package_install
             if ! command -v yay &> /dev/null; then
                 echo "Mate you havent installed yay yet!!!!"
-                return 0
             fi
+            ;;
+        "gimme a number one to ten plzzz")
+            random_number
+            ;;
+        "edit config")
+            edit_config
+            ;;
+        "edit file")
+            edit_file
+            ;;
+        "whats my username again")
+            user_plz
+            ;;
+        "say date")
+            date_plz
+            ;;
+        "update yay")
+            update_yay
+            ;;
+        "uninstall a yay package")
+            uninstall_yay_package
+            ;;
+        "flatpak installation")
+            install_flatpak
             ;;
         "Quit")
             echo "Exiting the trash script alr? weak..."
