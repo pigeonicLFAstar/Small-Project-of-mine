@@ -14,13 +14,13 @@ update() {
 fetch_me() {
     echo "enter package name: "
     read input
-    sudo pacman -Rns "$input"
+    sudo pacman -S "$input"
 }
 
 remove_package() {
     echo "enter package name to remove: "
     read input2
-    sudo pacman -R "$input2"
+    sudo pacman -Rns "$input2"
 }
 echo -e "Select yo option bruv!\n"
 select choice in "Update System" "Install" "Uninstall" "Quit"; do
@@ -35,7 +35,7 @@ select choice in "Update System" "Install" "Uninstall" "Quit"; do
             remove_package
             ;;
         "Quit")
-            echo "Aborting..."
+            echo "Exiting the trash script alr? weak..."
             break
             ;;
     esac
