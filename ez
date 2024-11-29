@@ -66,6 +66,7 @@ select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur packa
             aur_package_install
             if ! command -v yay &> /dev/null; then
                 echo "Mate you havent installed yay yet!!!!"
+                return 0
             fi
             ;;
         "Quit")
