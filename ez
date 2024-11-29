@@ -17,6 +17,10 @@ fetch_me() {
     sudo pacman -S "$input"
 }
 install_yay_thing() {
+    if command -v yay &> /dev/null; then
+        echo "MATE YUO ALR HAVE YAY INSTALLED!!!!!!!"
+        return 0
+    fi
     cd ~
     mkdir git
     cd git
@@ -29,6 +33,10 @@ install_yay_thing() {
     echo "Yay officially installed on your arch(btw) system!!1!!!11!1"
 }
 aur_package_install() {
+    if ! command -v yay &> /dev/null; then
+        echo "go back to installing yay before you pick this option, privileged!11!11!1"
+        exit 1
+    fi
     echo "select the package you wanna install: "
     read aur_input
     yay -S "$aur_input"
@@ -39,7 +47,7 @@ remove_package() {
     sudo pacman -Rns "$input2"
 }
 echo -e "Select yo option bruv!\n"
-select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur package manager" "aur install"; do
+select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur package manager" "aur install" "Quit fully"; do
     case $choice in
         "Update System")
             update
@@ -55,10 +63,16 @@ select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur packa
             ;;
         "aur install")
             aur_package_install
+            if ! command -v yay &> /dev/null; then
+                echo "Mate you havent installed yay yet!!!!"
+            fi
             ;;
         "Quit")
             echo "Exiting the trash script alr? weak..."
             break
+            ;;
+        "Quit fully")
+            exit
             ;;
     esac
 done
