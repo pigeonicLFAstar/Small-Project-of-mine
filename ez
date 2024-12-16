@@ -20,15 +20,98 @@ random_number() {
     random=$(($RANDOM % 10))
     echo "uhh, okay? here: $random"
 }
+regen_inframints() {
+    sudo mkinitcpio -P
+}
+youtube_downloader() {
+    echo "enter URL: "
+    read url_input
+    echo "type(mp3, mp4): "
+    read type_input
+    if [[ "$type_input" == "mp3" ]]; then
+        yt-dlp --extract-audio --audio-format mp3 "$url_input"
+    elif [[ "$type_input" == "mp4" ]]; then
+        yt-dlp -f bestvideo+bestaudio --merge-output-format mp4 "$url_input"
+    else
+        echo "Unkown"
+    fi
+}
+install_desktop_environments() {
+    echo "Warning! this option will install desktop managers, yes it may not be alot of options here but more will be added!"
+    sleep 1
+    echo "type it in, here are the options: gnome, plasma, xfce, cinammon, lxqt, mate(you cant mispell these!!!)"
+    read choice_desktop
+    case $choice_desktop in
+        "gnome")
+            if command -v gnome-shell &> /dev/null; then
+                echo "you already have gnome installed!"
+            else
+                sudo pacman -S gnome
+            fi
+            ;;
+        "plasma")
+            if command -v plasmashell &> /dev/null; then
+                echo "you already have plasma installed!"
+            else
+                sudo pacman -S plasma dolphin konsole discover
+            fi
+            ;;
+        "xfce")
+            if command -v xfce4-session &> /dev/null; then
+                echo "you already have xfce installed!"
+            else
+                sudo pacman -S xfce4 xfce4-goodies
+            fi
+            ;;
+        "cinammon")
+            if command -v cinammon-session &> /dev/null; then
+                echo "you already have cinammon installed"
+            else
+                sudo pacman -S cinammon
+            fi
+            ;;
+        "lxqt")
+            if command -v lxqt-session &> /dev/null; then
+                echo "you already have lxqt installed!"
+            else
+                sudo pacman -S lxqt
+            fi
+            ;;
+        "mate")
+            if command -v mate-session &> /dev/null; then
+                echo "you already have mate installed!"
+            else
+                sudo pacman -S mate
+            fi
+            ;;
+        *)
+            echo "Sorry, the desktop environment your trying to specify is not available or unkown!"
+            ;;
+        esac
+}
 edit_config() {
     echo "hohoho, so you want to edit me?!?!? idc, js go ahead, script is all yours."
     sleep 2
     sudo nano /usr/bin/ez
 }
+install_anime_for_linux() {
+    if ! command -v yay &> /dev/null; then
+        echo "By all that means PLEASE GO INSTALL YAY FIRST BEFORE YOU RUN THIS, period"
+        exit 1
+    elif command -v ani-cli &> /dev/null; then
+        echo "You alr have ani-cli installed..."
+    else
+        yay -S ani-cli
+        echo "anime has been installed on your machine, run ani-cli or use the option one to start watching anime!11!!1"
+    fi
+}
 edit_file() {
     echo "alr, specify the file name you want to edit AND THE DIRECTORY OFC, human."
     read stop_looking_here
     nano "$stop_looking_here"
+}
+watch_anime() {
+    ani-cli
 }
 date_plz() {
     date=$(date)
@@ -37,6 +120,19 @@ date_plz() {
 user_plz() {
     user=$(whoami)
     echo "$user, there, i told you!!!11!1"
+}
+move_file() {
+    echo "select which file to move, to that directory(if the file is in another directory than the directory YOU are in right now, specify the directory too for the file to be move)"
+    echo "start with file: "
+    read file_moving
+    echo "now directory: "
+    read move_to_directory
+    sudo mv "$file_moving" "$move_to_directory"
+}
+edit_hostname() {
+    echo "What would you like your hostname to be: "
+    read choice_for_hostname
+    echo "$choice_for_hostname" | sudo tee /etc/hostname
 }
 install_yay_thing() {
     if command -v yay &> /dev/null; then
@@ -54,6 +150,35 @@ install_yay_thing() {
     sudo rm -rf ~/git/
     echo "Yay officially installed on your arch(btw) system!!1!!!11!1"
 }
+install_virtual_machine_stuff() {
+    if command -v qemu &> /dev/null || command -v libvirt &> /dev/null || command -v virt-manager &> /dev/null || command -v ebtables &> /dev/null || command -v dnsmasq &> /dev/null || command -v bridge-utils &> /dev/null; then
+        echo "you already have kvm and such"
+    else
+        echo "this option will install kvm, qemu, virt manager and others"
+        sudo pacman -S qemu libvirt virt-manager ebtables dnsmasq bridge-utils
+        sudo systemctl enable --now libvirtd
+        sudo usermod -aG libvirt $user
+        sudo virsh net-start default
+        sudo virsh net-autostart default
+    fi
+
+}
+search_for_package() {
+    echo "enter the package you want to search(pacman): "
+    read search_package_input
+    sudo pacman -Ss "$search_package_input"
+}
+mimi_open() {
+    if ! command -v xdg-open &> /dev/null; then
+        sudo pacman -S xdg-open
+    else
+        echo "experience mimi!!!1!!1!"
+        xdg-open "https://youtu.be/4yCRjwSzVHg?si=1xjGoHar6SKVzhmb"
+    fi
+}
+tell_uptime() {
+    uptime -p
+}
 uninstall_yay_package() {
     echo "select which yay package to uninstall(improves your arch jawline, get it?): "
     read select_remove_package
@@ -61,6 +186,20 @@ uninstall_yay_package() {
 }
 update_yay() {
     yay -Syu
+}
+text_editors_installer() {
+    echo "Warning! this option will install these text editors: gedit, vi, vim, neovim, nano, emacs, ya sure you want to install these?! "
+    read plz_idk
+    if [[ "$plz_idk" == "yes" ]]; then
+        sudo pacman -S vi vim neovim gedit nano emacs
+    else
+        echo "tip: go to a spelling school to learn how to spell 'yes'"
+    fi
+}
+run_tool() {
+    echo "which tool would you like to run?(example: firefox, code(vscode) and more"
+    read tool_input_choice
+    "$tool_input_choice"
 }
 aur_package_install() {
     if ! command -v yay &> /dev/null; then
@@ -75,6 +214,28 @@ remove_package() {
     echo "enter package name to remove: "
     read input2
     sudo pacman -Rns "$input2"
+}
+remove_a_file_directory() {
+    echo "File/Directory to remove: "
+    read remove_file_directory_choice
+    sudo rm -rf "$remove_file_directory_choice"
+
+}
+reboot_sys() {
+    reboot
+}
+shutdown_sys() {
+    shutdown now
+}
+search_for_aur() {
+    if ! command -v yay &> /dev/null; then
+        echo "you dont have yay installed! go install it first ya human!"
+        exit 1
+    else
+        echo "type to search for aur package: "
+        read aur_package_search_input
+        sudo yay -Ss "$aur_package_search_input"
+    fi
 }
 install_flatpak() {
     if command -v flatpak &> /dev/null; then
@@ -92,7 +253,7 @@ install_flatpak() {
     fi
 }
 echo -e "Select yo option bruv!\n"
-select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur package manager" "aur install" "gimme a number one to ten plzzz" "edit config" "edit file" "whats my username again" "say date" "update yay" "uninstall a yay package" "flatpak installation"; do
+select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur package manager" "aur install" "gimme a number one to ten plzzz" "edit config" "edit file" "whats my username again" "say date" "update yay" "uninstall a yay package" "flatpak installation" "anime install" "watch anime" "install text editors" "select app/cli to run" "move a file to a directory" "kvm and vm installation" "remove a file/directory" "edit hostname" "mimi?" "uptime" "restart system" "shutdown system" "install desktop environments" "search for a pacman package" "search for a aur package" "Regenerate Inframints" "Youtube Downloader"; do
     case $choice in
         "Update System")
             update
@@ -136,9 +297,61 @@ select choice in "Update System" "Install" "Uninstall" "Quit" "Install aur packa
         "flatpak installation")
             install_flatpak
             ;;
+        "anime install")
+            install_anime_for_linux
+            ;;
+        "watch anime")
+            watch_anime
+            ;;
+        "install text editors")
+            text_editors_installer
+            ;;
+        "select app/cli to run")
+            run_tool
+            ;;
+        "move a file to a directory")
+            move_file
+            ;;
+        "kvm and vm installation")
+            install_virtual_machine_stuff
+            ;;
+        "remove a file/directory")
+            remove_a_file_directory
+            ;;
+        "edit hostname")
+            edit_hostname
+            ;;
+        "mimi?")
+            mimi_open
+            ;;
+        "uptime")
+            tell_uptime
+            ;;
+        "restart system")
+            reboot_sys
+            ;;
+        "shutdown system")
+            shutdown_sys
+            ;;
+        "install desktop environments")
+            install_desktop_environments
+            ;;
+        "search for a pacman package")
+            search_for_package
+            ;;
+        "search for a aur package")
+            search_for_aur
+            ;;
+        "Regenerate Inframints")
+            regen_inframints
+            ;;
+        "Youtube Downloader")
+            youtube_downloader
+            ;;
         "Quit")
             echo "Exiting the trash script alr? weak..."
             break
             ;;
     esac
 done
+
